@@ -8,7 +8,6 @@ import { cntc } from 'components/redux/selectors';
 export const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(cntc);
-  console.log(contacts);
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -43,12 +42,6 @@ export const ContactForm = () => {
         break;
     }
   };
-
-  // const isValidPhoneNumber = phoneNumber => {
-  //   // Перевірка, чи введено дійсний номер телефону
-  //   const phoneRegex = /^\d{3}-\d{2}-\d{2}$/;
-  //   return phoneRegex.test(phoneNumber);
-  // };
 
   const inputNameId = nanoid();
   const inputNumberId = nanoid();

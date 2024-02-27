@@ -12,9 +12,6 @@ export const ContactList = () => {
     dispatch(deleteContact(contactId));
   };
 
-  // const filteredContacts = contacts.filter(({ name }) => {
-  // return name.toLowerCase().includes(filterContacts.toLowerCase());
-  // });
   const filteredContacts = contacts.filter(({ name }) =>
     name.toLowerCase().includes(filterContacts.toLowerCase())
   );
