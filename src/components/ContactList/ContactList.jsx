@@ -1,42 +1,33 @@
 import { deleteContact } from 'components/redux/contactSlice';
 import { List } from './ContactList.styled';
 import { useSelector, useDispatch } from 'react-redux';
+import { cntc, fltr } from 'components/redux/selectors';
 
 export const ContactList = () => {
-  const contacts = useSelector(state => state.contacts.contacts);
-  const filterContacts = useSelector(state => state.filter.filter);
+  const contacts = useSelector(cntc);
+  const filterContacts = useSelector(fltr);
   const dispatch = useDispatch();
-
-  // const onDeleteContact = contactId => {
-  //   const remainingContacts = contacts.filter(
-  //     contact => contact.id !== contactId
-  //   );
-  //   dispatch(deleteContact(remainingContacts));
-  // };
 
   const onDeleteContact = contactId => {
     dispatch(deleteContact(contactId));
   };
 
-  const findContact = () => {
-    const filterContact = contacts.filter(({ name }) => {
-      return name.includes(filterContacts);
-    });
-    return filterContact;
-  };
+  // const filteredContacts = contacts.filter(({ name }) => {
+  // return name.toLowerCase().includes(filterContacts.toLowerCase());
+  // });
+  const filteredContacts = contacts.filter(({ name }) =>
+    name.toLowerCase().includes(filterContacts.toLowerCase())
+  );
 
   return (
     <List>
-      {[
-        findContact().map(({ id, name, number }) => {
-          return (
-            <li key={id}>
-              {name}: {number}
-              <button onClick={() => onDeleteContact(id)}>Delete</button>
-            </li>
-          );
-        }),
-      ]}
+      {filteredContacts.map(({ id, name, number }) => (
+        <li key={id}>
+          {name}: {number}
+          <button onClick={() => onDeleteContact(id)}>Delete</button>
+        </li>
+      ))}
+      {filteredContacts.length === 0 && <li>No contacts found</li>}
     </List>
   );
 };
